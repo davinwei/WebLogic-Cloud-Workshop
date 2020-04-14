@@ -82,14 +82,20 @@ A key pair consists of a public key and a corresponding private key. When you cr
 In your CLoud Shell window, use the ssh-keygen utility:
 
 ```
-$ ssh-keygen -b 2048 -t rsa -f mykey
+	mkdir ~/.oci
+	ssh-keygen -t rsa -P "" -f ~/.oci/id_rsa
+
+	openssl genrsa -out ~/.oci/oci_api_key.pem 2048
+	chmod 600 ~/.oci/oci_api_key.pem
+	
+	openssl rsa -pubout -in ~/.oci/oci_api_key.pem -out ~/.oci/oci_api_key_public.pem
     
-$ cat mykey.pub  
+$ cat ~/.oci/id_rsa.pub  
 ```
 
 ---
 
-**Note:** Keep a record of the output of the above **'cat mykey.pub'** command for later use in this lab.
+**Note:** Keep a record of the output of the above **'cat id_rsa.pub'** command for later use in this lab.
 
 ---
 
@@ -121,20 +127,21 @@ Use your preferred editor (for example vim or nano) to open the file terraform.t
 
 oci_base_identity = {
   api_fingerprint      = "64:8c:3b:..."
-  api_private_key_path = "/Your_directory/.oci/oci_api_key.pem"
+  api_private_key_path = "/home/opc/.oci/oci_api_key.pem"
   api_private_key_password = "api_private_key_passphrase"
   compartment_id       = "ocid1.compartment.oc1..aaaaaaaa3l..."
   tenancy_id           = "ocid1.tenancy.oc1..aaaaaaaaznlqfv..."
   user_id              = "ocid1.user.oc1..aaaaaaaajbvljcmjw..."
 }
 
+#region shouble be the home region of tenancy, maybe not the same with your region of VM.
 oci_base_general = {
   label_prefix = "base"
   region       = "us-MYREGION-1"
 }
 
 
-# Base 64 password
+# Base 64 password for weblogic admin user
 
 Base64_Password = "bWlu..."
 
