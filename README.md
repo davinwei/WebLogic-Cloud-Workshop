@@ -82,13 +82,13 @@ A key pair consists of a public key and a corresponding private key. When you cr
 In your CLoud Shell window, use the ssh-keygen utility:
 
 ```
-	mkdir ~/.oci
-	ssh-keygen -t rsa -P "" -f ~/.oci/id_rsa
+$ mkdir ~/.oci
+$ ssh-keygen -t rsa -P "" -f ~/.oci/id_rsa
 
-	openssl genrsa -out ~/.oci/oci_api_key.pem 2048
-	chmod 600 ~/.oci/oci_api_key.pem
+$ openssl genrsa -out ~/.oci/oci_api_key.pem 2048
+$ chmod 600 ~/.oci/oci_api_key.pem
 	
-	openssl rsa -pubout -in ~/.oci/oci_api_key.pem -out ~/.oci/oci_api_key_public.pem
+$ openssl rsa -pubout -in ~/.oci/oci_api_key.pem -out ~/.oci/oci_api_key_public.pem
     
 $ cat ~/.oci/id_rsa.pub  
 ```
